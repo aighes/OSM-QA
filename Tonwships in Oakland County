@@ -1,0 +1,6 @@
+[out:json][timeout:25];
+area(id:3600359761)->.searchArea;
+// gather results
+relation["admin_level"="8"](area.searchArea);
+// print results
+out geom;

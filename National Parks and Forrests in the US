@@ -1,0 +1,14 @@
+[out:json];
+area(3600148838)->.searchArea;
+(relation["protection_title"="National Monument"];
+relation["protection_title"="National Park"]
+(area.searchArea);
+);
+out body geom;
+
+{{style:
+relation[protection_title=National Monument]
+{text: name; color:blue; fill-color:blue; }
+relation[protection_title=National Park]
+{text: name; color:red; fill-color:red; }
+}}

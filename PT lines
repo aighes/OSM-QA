@@ -1,0 +1,40 @@
+[out:json][timeout:30];
+//fetching routes
+
+(relation["type"="route"]["network:guid"~"DE-TH-VMT"]["route:area"="city"];)->.network;
+(relation["type"="route"]["network:guid"~"DE-TH-VMT"]["route:area"="region"];.network;)->.network;
+
+//(relation["type"="route"]["network:guid"~"CN-SH-Shanghai"];)->.network;
+
+//only show PTv1 or PTv2
+//(relation.network["public_transport:version"!="2"];)->.network;
+(relation.network["public_transport:version"="2"];)->.network;
+
+//Filter tram and bus routes
+(relation.network["route"="bus"];)->.bus;
+(relation.network["route"="tram"];)->.tram;
+(relation.network["route"="subway"];)->.subway;
+
+(.bus;.tram;.subway;)->.routes;
+.routes; out geom;
+
+//fetch all stop_positions from the routes
+(node(r.routes:"stop");node(r.routes:"stop_exit_only");node(r.routes:"stop_entry_only");)->.stop;
+>; out geom;
+
+//mark the stop_position nodes
+.stop;
+convert node
+     ::id = id(),
+	 role = "stop";
+out;
+
+{{style:
+relation[colour][route=bus] { color:eval("tag('colour')"); width:6 }
+relation[!colour][route=bus] { color:purple; width:6 }
+relation[colour][route=tram] { color:eval("tag('colour')"); width:10 }
+relation[!colour][route=tram] { color:purple; width:10 }
+relation[route=rail] { color:black; dashes:10,20; width:10 }
+node[!role] { fill-color: transparent; color:transparent; }
+node[role=stop] { color:black; symbol-shape:circle; symbol-size:5; width:2; opacity:1; fill-color:white; fill-opacity:1; }
+}}
