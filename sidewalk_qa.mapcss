@@ -1,0 +1,23 @@
+/* missing_kerb = yes → red circle */
+node[issue=missing_kerb] {
+    symbol-shape: circle;
+    symbol-size: 10;
+    symbol-fill-color: red;
+    symbol-stroke-color: red;
+}
+
+/* crossing_missing = yes → orange square */
+node[issue=crossing_missing] {
+    symbol-shape: square;
+    symbol-size: 10;
+    symbol-fill-color: orange;
+    symbol-stroke-color: orange;
+}
+
+/* sidewalk_road = yes → blue triangle */
+node[issue=sidewalk_road] {
+    symbol-shape: triangle;
+    symbol-size: 10;
+    symbol-fill-color: blue;
+    symbol-stroke-color: blue;
+}
