@@ -6,17 +6,17 @@ node[issue=missing_kerb] {
     symbol-stroke-color: red;
 }
 
-/* crossing_missing = yes → orange square */
+/* crossing_missing = yes → orange circle */
 node[issue=crossing_missing] {
-    symbol-shape: square;
+    symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: orange;
     symbol-stroke-color: orange;
 }
 
-/* sidewalk_road = yes → blue triangle */
+/* sidewalk_road = yes → blue circle */
 node[issue=sidewalk_road] {
-    symbol-shape: triangle;
+    symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: blue;
     symbol-stroke-color: blue;

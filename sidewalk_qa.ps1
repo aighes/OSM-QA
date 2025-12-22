@@ -243,20 +243,25 @@ Write-Host "`r$($Ways.Count) Ways parsed"
 Write-Host "Checking for issues..." -NoNewline
 $FilterNodes = $NodeMap.Values
 foreach ($Node in $FilterNodes) {
-    # missing kerb
-    if ($Node.end_sidewalk -eq "yes" -and ($Node.end_crossing -eq "yes" -or $Node.end_link -eq "yes") -and $Node.kerb -ne "no" -and $Node.barrier -ne "kerb") {
+    # missing kerb, red circle
+    if (($Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and ($Node.end_crossing -eq "yes" -or $Node.mid_crossing -eq "yes" -or$Node.end_link -eq "yes") -and $Node.kerb -ne "no" -and $Node.barrier -ne "kerb") {
         Add-Issue $Node "missing_kerb"
         $MissingKerbCount++
     }
 
-    # crossing missing
+    # crossing missing, orange circle
     if ($Node.mid_crossing -eq "yes" -and $Node.road -eq "yes" -and $Node.highway -ne "crossing") {
         Add-Issue $Node "crossing_missing"
         $CrossingMissingCount++
     }
 
-    # sidewalk on road
+    # sidewalk on road, blue circle
     if (($Node.end_crossing -eq "yes" -or $Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and $Node.road -eq "yes") {
+        if ($Node['id'] -eq 9829048177) {
+            Write-Host 'mid_sidewalk = '$Node["mid_sidewalk"]
+            Write-Host 'road = '$Node["road"]
+        }
+        
         Add-Issue $Node "sidewalk_road"
         $SidewalkRoadCount++
     }
