@@ -221,9 +221,32 @@ foreach ($Element in $Ways) {
         $Node = $NodeMap[$NodeId]
 
         if ($IsPath) {
-            if ($SidewalkVal -contains $PathType) { if ($IsEnd){$Node["end_sidewalk"]="yes"} else{$Node["mid_sidewalk"]="yes"} }
-            if ($CrossingVal -contains $PathType) { if ($IsEnd){$Node["end_crossing"]="yes"} else{$Node["mid_crossing"]="yes"} }
-            if ($LinkVal -contains $PathType) { if ($IsEnd){$Node["end_link"]="yes"} else{$Node["mid_link"]="yes"} }
+            if ($SidewalkVal -contains $PathType) { 
+                if ($IsEnd) {
+                    $Node["end_sidewalk"]="yes"
+                } else {
+                    $Node["mid_sidewalk"]="yes"
+                }
+            }
+            if ($CrossingVal -contains $PathType) {
+                if ($IsEnd) {
+                    if (($Node["end_crossing"] -eq "yes") -and ($Node["highway"] -eq "crossing")) {
+                        $Node["mid_crossing"]="yes"
+                        $null = $Node.Remove("end_crossing")
+                    } else {
+                        $Node["end_crossing"]="yes"
+                    }
+                } else {
+                    $Node["mid_crossing"]="yes"
+                }
+            }
+            if ($LinkVal -contains $PathType) {
+                if ($IsEnd) {
+                    $Node["end_link"]="yes"
+                } else {
+                    $Node["mid_link"]="yes"
+                }
+            }
         }
 
         if ($IsRoad) { $Node["road"]="yes" }
