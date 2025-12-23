@@ -9,9 +9,10 @@ Write-Information "Identify issues (missing kerb, crossing missing, sidewalk on 
 # Configuration
 # ==============================
 [string]$OverpassUrl = "https://overpass-api.de/api/interpreter"
-[boolean]$OmitDownload = $false
-[string]$InputFile = Join-Path $PSScriptRoot "data\export.json"
+[boolean]$OmitDownload = $true
+[string]$InputFilePath = Join-Path $PSScriptRoot "data\export.json"
 [string]$OutIssueFilePath = Join-Path $PSScriptRoot "output\sidewalk_issues.geojson"
+[string]$CsvFilePath = Join-Path $PSScriptRoot "output\statistics.csv"
 
 # Bounding box
 [Double]$MinLon = -83.3251400
@@ -26,6 +27,7 @@ function Get-HighwayFromOverpass {
     [CmdletBinding()]
     param(
         [string]$BBox,
+        [string]$FilePath,
         [bool]$OmitDownload = $false,
         [int]$MaxRetries = 3,
         [int]$RetryDelaySec = 5
@@ -38,8 +40,10 @@ function Get-HighwayFromOverpass {
     $attempt = 0
     while ($attempt -lt $MaxRetries) {
         try {
-            Write-Information "Downloading Overpass data (attempt $($attempt+1))..."
-            Invoke-WebRequest -Uri $OverpassUrl -Method Post -Body $OverpassQuery -ContentType "application/x-www-form-urlencoded" -OutFile $InputFile
+
+            Write-Host "`rDownloading Overpass data (attempt $($attempt + 1))..." -NoNewline
+            Invoke-WebRequest -Uri $OverpassUrl -Method Post -Body $OverpassQuery -ContentType "application/x-www-form-urlencoded" -OutFile $FilePath
+            
             return $true
         } catch {
             Write-Warning "Download failed: $($_.Exception.Message)"
@@ -71,7 +75,7 @@ function Write-GeoJson {
         [Parameter(Mandatory)]
         [string]$Copyright,
         [Parameter(Mandatory)]
-        [string]$TimeStamp
+        [string]$TimeStampString
     )
 
     $Features = foreach ($Node in $Nodes) {
@@ -96,7 +100,7 @@ function Write-GeoJson {
 
     $GeoJson = [ordered]@{
         osm3s = [ordered]@{
-            timestamp_osm_base = $TimeStamp
+            timestamp_osm_base = $TimeStampString
             copyright = $Copyright
         }
         type = "FeatureCollection"
@@ -127,7 +131,7 @@ function Add-Issue {
 # ==============================
 [string]$BBox = "$MinLat,$MinLon,$MaxLat,$MaxLon"
 
-$DownloadSuccess = Get-HighwayFromOverpass $BBox $OmitDownload
+$DownloadSuccess = Get-HighwayFromOverpass -Bbox $BBox -FilePath $InputFilePath -OmitDownload $OmitDownload
 if (-not $DownloadSuccess) {
     throw "Overpass download failed"
 } else {
@@ -142,7 +146,7 @@ if (-not $DownloadSuccess) {
 # Load JSON
 # ==============================
 Write-Host "Loading JSON..." -NoNewline
-[byte[]]$FileBytes = [System.IO.File]::ReadAllBytes($InputFile)
+[byte[]]$FileBytes = [System.IO.File]::ReadAllBytes($InputFilePath)
 [string]$JsonText = [System.Text.Encoding]::UTF8.GetString($FileBytes)
 $OverpassJson = $JsonText | ConvertFrom-Json
 Write-Host "`rJSON loaded            "
@@ -154,7 +158,12 @@ if ($OverpassJson.remark) {
 
 $Osm3s = $OverpassJson.osm3s
 [string]$Copyright = $Osm3s.copyright
-[string]$TimeStamp = $Osm3s.timestamp_osm_base
+[DateTime]$TimeStamp = $Osm3s.timestamp_osm_base
+[string]$TimeStampString = $TimeStamp.ToString()
+
+[DateTime]$TimeStampUtc = $TimeStamp.ToUniversalTime()
+[string]$CurrentDate = $TimeStampUtc.ToString("yyyy-MM-dd")
+[string]$CurrentTime = $TimeStampUtc.ToString("HH:mm:ss")
 
 # ==============================
 # Node map
@@ -177,7 +186,8 @@ foreach ($Element in $Nodes) {
         }
     }
 }
-Write-Host "`r$($NodeMap.Count) Nodes parsed"
+[int64]$InputNodes = $NodeMap.Count
+Write-Host "`r$($InputNodes) Nodes parsed"
 
 # ==============================
 # Parse Ways
@@ -252,7 +262,8 @@ foreach ($Element in $Ways) {
         if ($IsRoad) { $Node["road"]="yes" }
     }
 }
-Write-Host "`r$($Ways.Count) Ways parsed"
+[int64]$InputWays = $Ways.Count
+Write-Host "`r$($InputWays) Ways parsed"
 
 # ==============================
 # Filters and output
@@ -294,7 +305,7 @@ Write-Host "`r$($IssueNodes.Count) issues found"
 # Write GeoJSON
 if ($IssueNodes.Count -gt 0) {
     $AllIssueNodes = $IssueNodes.Values
-    Write-GeoJson -Nodes $AllIssueNodes -OutFile $OutIssueFilePath -TimeStamp $TimeStamp -Copyright $Copyright
+    Write-GeoJson -Nodes $AllIssueNodes -OutFile $OutIssueFilePath -TimeStamp $TimeStampString -Copyright $Copyright
 }
 
 # ==============================
@@ -304,6 +315,31 @@ Write-Host "Check results:" -ForegroundColor Yellow
 Write-Host ("  missing_kerb     : {0}" -f $MissingKerbCount) -ForegroundColor Yellow
 Write-Host ("  crossing_missing : {0}" -f $CrossingMissingCount) -ForegroundColor Yellow
 Write-Host ("  sidewalk_road    : {0}" -f $SidewalkRoadCount) -ForegroundColor Yellow
+
+# Build the data object
+$CsvObject = New-Object PSObject
+$CsvObject | Add-Member -MemberType NoteProperty -Name "Date"   -Value $CurrentDate
+$CsvObject | Add-Member -MemberType NoteProperty -Name "Time"   -Value $CurrentTime
+$CsvObject | Add-Member -MemberType NoteProperty -Name "nodes" -Value $InputNodes
+$CsvObject | Add-Member -MemberType NoteProperty -Name "ways" -Value $Ways.Count
+$CsvObject | Add-Member -MemberType NoteProperty -Name "missing_kerb" -Value $MissingKerbCount
+$CsvObject | Add-Member -MemberType NoteProperty -Name "crossing_missing" -Value $CrossingMissingCount
+$CsvObject | Add-Member -MemberType NoteProperty -Name "sidewalk_road" -Value $SidewalkRoadCount
+# Check if CSV exists
+[bool]$FileExists = Test-Path -Path $CsvFilePath
+
+if ($FileExists -eq $true)
+{
+    # Append without header
+    $CsvObject |
+        Export-Csv -Path $CsvFilePath -Delimiter ";" -NoTypeInformation -Append
+}
+else
+{
+    # Create file with header
+    $CsvObject |
+        Export-Csv -Path $CsvFilePath -Delimiter ";" -NoTypeInformation
+}
 
 # Pause only if not in VS Code
 if ($Host.Name -ne 'Visual Studio Code Host') {
