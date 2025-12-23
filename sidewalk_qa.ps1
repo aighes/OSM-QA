@@ -9,7 +9,6 @@ Write-Information "Identify issues (missing kerb, crossing missing, sidewalk on 
 # Configuration
 # ==============================
 [string]$OverpassUrl = "https://overpass-api.de/api/interpreter"
-[boolean]$OmitDownload = $true
 [string]$InputFilePath = Join-Path $PSScriptRoot "data\export.json"
 [string]$OutIssueFilePath = Join-Path $PSScriptRoot "output\sidewalk_issues.geojson"
 [string]$CsvFilePath = Join-Path $PSScriptRoot "output\statistics.csv"
@@ -130,6 +129,8 @@ function Add-Issue {
 # Download from Overpass
 # ==============================
 [string]$BBox = "$MinLat,$MinLon,$MaxLat,$MaxLon"
+[string]$Response = Read-Host "Do you want to download data from OverpassAPI? (y/n)"
+[boolean]$OmitDownload = -not($response -match '^(y|yes)$')
 
 $DownloadSuccess = Get-HighwayFromOverpass -Bbox $BBox -FilePath $InputFilePath -OmitDownload $OmitDownload
 if (-not $DownloadSuccess) {
