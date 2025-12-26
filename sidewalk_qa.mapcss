@@ -1,4 +1,4 @@
-/* missing_kerb = yes → red circle */
+/* missing_kerb → red circle */
 node[issue=missing_kerb] {
     symbol-shape: circle;
     symbol-size: 10;
@@ -6,7 +6,7 @@ node[issue=missing_kerb] {
     symbol-stroke-color: red;
 }
 
-/* crossing_missing = yes → orange circle */
+/* crossing_missing → orange circle */
 node[issue=crossing_missing] {
     symbol-shape: circle;
     symbol-size: 10;
@@ -14,10 +14,18 @@ node[issue=crossing_missing] {
     symbol-stroke-color: orange;
 }
 
-/* sidewalk_road = yes → blue circle */
+/* sidewalk_road → blue circle */
 node[issue=sidewalk_road] {
     symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: blue;
     symbol-stroke-color: blue;
+}
+
+/* crossing_tags → green circle */
+node[issue=crossing_tags] {
+    symbol-shape: circle;
+    symbol-size: 10;
+    symbol-fill-color: green;
+    symbol-stroke-color: green;
 }

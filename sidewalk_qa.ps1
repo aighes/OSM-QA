@@ -19,127 +19,24 @@ Write-Information "Identify issues (missing kerb, crossing missing, sidewalk on 
 [Double]$MaxLon = -83.0833933
 [Double]$MaxLat = 42.6183050
 
-# ==============================
-# Helper functions
-# ==============================
-function Get-HighwayFromOverpass {
-    [CmdletBinding()]
-    param(
-        [string]$BBox,
-        [string]$FilePath,
-        [bool]$OmitDownload = $false,
-        [int]$MaxRetries = 3,
-        [int]$RetryDelaySec = 5
-    )
-
-    if ($OmitDownload) { return $true }
-
-    $OverpassQuery = "[out:json][timeout:180];(way[`"highway`"]($BBox);node[`"highway`"=`"crossing`"]($BBox);node[`"barrier`"=`"kerb`"]($BBox);node[`"kerb`"=`"no`"]($BBox););out geom;"
-    
-    $attempt = 0
-    while ($attempt -lt $MaxRetries) {
-        try {
-
-            Write-Host "`rDownloading Overpass data (attempt $($attempt + 1))..." -NoNewline
-            Invoke-WebRequest -Uri $OverpassUrl -Method Post -Body $OverpassQuery -ContentType "application/x-www-form-urlencoded" -OutFile $FilePath
-            
-            return $true
-        } catch {
-            Write-Warning "Download failed: $($_.Exception.Message)"
-            Start-Sleep -Seconds $RetryDelaySec
-            $attempt++
-        }
-    }
-    Write-Warning "Failed to download Overpass data after $MaxRetries attempts."
-    return $false
-}
-function Get-Tag {
-    param (
-        $Tags,
-        [string]$Key
-    )
-    if ($null -ne $Tags) {
-        if ($Tags.PSObject.Properties.Name -contains $Key) {
-            return [string]$Tags.$Key
-        }
-    }
-    return $null
-}
-function Write-GeoJson {
-    param (
-        [Parameter(Mandatory)]
-        [array]$Nodes,
-        [Parameter(Mandatory)]
-        [string]$OutFile,
-        [Parameter(Mandatory)]
-        [string]$Copyright,
-        [Parameter(Mandatory)]
-        [string]$TimeStampString
-    )
-
-    $Features = foreach ($Node in $Nodes) {
-        [ordered]@{
-            type = "Feature"
-            geometry = [ordered]@{
-                type = "Point"
-                coordinates = @($Node.Lon, $Node.Lat)
-            }
-            properties = @{
-                issue = if($Node.ContainsKey('issue')){$Node.issue} else {"no"}
-                end_crossing = if($Node.ContainsKey('end_crossing')){$Node.end_crossing} else {"no"}
-                mid_crossing = if($Node.ContainsKey('mid_crossing')){$Node.mid_crossing} else {"no"}
-                end_link = if($Node.ContainsKey('end_link')){$Node.end_link} else {"no"}
-                mid_link = if($Node.ContainsKey('mid_link')){$Node.mid_link} else {"no"}
-                end_sidewalk = if($Node.ContainsKey('end_sidewalk')){$Node.end_sidewalk} else {"no"}
-                mid_sidewalk = if($Node.ContainsKey('mid_sidewalk')){$Node.mid_sidewalk} else {"no"}
-                road = if($Node.ContainsKey('road')){$Node.road} else {"no"}
-            }
-        }
-    }
-
-    $GeoJson = [ordered]@{
-        osm3s = [ordered]@{
-            timestamp_osm_base = $TimeStampString
-            copyright = $Copyright
-        }
-        type = "FeatureCollection"
-        features = $Features
-    }
-
-    $Json = $GeoJson | ConvertTo-Json -Depth 10 -Compress
-    [System.IO.File]::WriteAllText($OutFile, $Json, [System.Text.Encoding]::UTF8)
-    $OutFileName = Split-Path $OutIssueFilePath -Leaf
-    Write-Host "$OutFileName written"
-}
-function Add-Issue {
-    param (
-        [hashtable]$Node,
-        [string]$Issue
-    )
-    if (-not $Node.ContainsKey("issue")) {
-        $Node["issue"] = @()
-    }
-    if ($Node["issue"] -notcontains $Issue) {
-        $Node["issue"] += $Issue
-    }
-    $IssueNodes[$Node["Id"]] = $Node
-}
+Import-Module "$PSScriptRoot\modules\GetDataFromOverpass.psm1"
+Import-Module "$PSScriptRoot\modules\SidewalkHelpers.psm1"
 
 # ==============================
 # Download from Overpass
 # ==============================
 [string]$BBox = "$MinLat,$MinLon,$MaxLat,$MaxLon"
+[string]$OverpassQuery = "[out:json][timeout:180];(way[`"highway`"]($BBox);node[`"highway`"=`"crossing`"]($BBox);node[`"barrier`"=`"kerb`"]($BBox);node[`"kerb`"=`"no`"]($BBox););out geom;"
+
 [string]$Response = Read-Host "Do you want to download data from OverpassAPI? (y/n)"
 [boolean]$OmitDownload = -not($response -match '^(y|yes)$')
 
-$DownloadSuccess = Get-HighwayFromOverpass -Bbox $BBox -FilePath $InputFilePath -OmitDownload $OmitDownload
+[boolean]$DownloadSuccess = Get-DataFromOverpass -OverpassUrl $OverpassUrl -OverpassQuery $OverpassQuery -FilePath $InputFilePath -OmitDownload $OmitDownload
 if (-not $DownloadSuccess) {
     throw "Overpass download failed"
 } else {
     if ($OmitDownload) {
         Write-Host "Download skipped (using existing file)"
-    } else {
-        Write-Host "Download complete"
     }
 }
 
@@ -154,6 +51,10 @@ Write-Host "`rJSON loaded            "
 
 if ($OverpassJson.remark) {
     Write-Warning "Overpass remark: $($OverpassJson.remark)"
+    if ($Host.Name -ne 'Visual Studio Code Host') {
+        Write-Host "Press any key to continue..."
+        [System.Console]::ReadKey($true) | Out-Null
+    }
     exit
 }
 
@@ -178,12 +79,16 @@ foreach ($Element in $Nodes) {
     if (-not $NodeMap.ContainsKey($NodeId)) {
         $Tags = $Element.tags
         $NodeMap[$NodeId] = @{
-            Id      = $NodeId
-            Lat     = [double]$Element.lat
-            Lon     = [double]$Element.lon
-            highway = Get-Tag $Tags "highway"
-            barrier = Get-Tag $Tags "barrier"
-            kerb    = Get-Tag $Tags "kerb"
+            Id                  = $NodeId
+            Lat                 = [double]$Element.lat
+            Lon                 = [double]$Element.lon
+            highway             = Get-Tag $Tags "highway"
+            barrier             = Get-Tag $Tags "barrier"
+            kerb                = Get-Tag $Tags "kerb"
+            crossing_signals    = Get-Tag $Tags "crossing:signals"
+            crossing_markings   = Get-Tag $Tags "crossing:markings"
+            crossing            = Get-Tag $Tags "crossing"
+            crossing_ref        = Get-Tag $Tags "crossing_ref"
         }
     }
 }
@@ -274,6 +179,7 @@ Write-Host "`r$($InputWays) Ways parsed"
 [int32]$MissingKerbCount     = 0
 [int32]$CrossingMissingCount = 0
 [int32]$SidewalkRoadCount    = 0
+[int32]$CrossingTagsCount    = 0
 
 Write-Host "Checking for issues..." -NoNewline
 $FilterNodes = $NodeMap.Values
@@ -291,14 +197,16 @@ foreach ($Node in $FilterNodes) {
     }
 
     # sidewalk on road, blue circle
-    if (($Node.end_crossing -eq "yes" -or $Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and $Node.road -eq "yes") {
-        if ($Node['id'] -eq 9829048177) {
-            Write-Host 'mid_sidewalk = '$Node["mid_sidewalk"]
-            Write-Host 'road = '$Node["road"]
-        }
-        
+    if (($Node.end_crossing -eq "yes" -or $Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and $Node.road -eq "yes") {      
         Add-Issue $Node "sidewalk_road"
         $SidewalkRoadCount++
+    }
+    # crossing tags, green circle
+    if($Node.highway -eq "crossing") {
+        if (($null -ne $Node.crossing) -or ($null -ne $Node.crossing_markings) -or ($null -ne $Node.crossing_ref) -or ($null -eq $Node.crossing_signals)){
+            Add-Issue $Node "crossing_tags"
+            $CrossingTagsCount++ 
+        }
     }
 }
 Write-Host "`r$($IssueNodes.Count) issues found"
@@ -316,6 +224,7 @@ Write-Host "Check results:" -ForegroundColor Yellow
 Write-Host ("  missing_kerb     : {0}" -f $MissingKerbCount) -ForegroundColor Yellow
 Write-Host ("  crossing_missing : {0}" -f $CrossingMissingCount) -ForegroundColor Yellow
 Write-Host ("  sidewalk_road    : {0}" -f $SidewalkRoadCount) -ForegroundColor Yellow
+Write-Host ("  crossing_tags    : {0}" -f $CrossingTagsCount) -ForegroundColor Yellow
 
 # Build the data object
 $CsvObject = New-Object PSObject
@@ -326,6 +235,7 @@ $CsvObject | Add-Member -MemberType NoteProperty -Name "ways" -Value $Ways.Count
 $CsvObject | Add-Member -MemberType NoteProperty -Name "missing_kerb" -Value $MissingKerbCount
 $CsvObject | Add-Member -MemberType NoteProperty -Name "crossing_missing" -Value $CrossingMissingCount
 $CsvObject | Add-Member -MemberType NoteProperty -Name "sidewalk_road" -Value $SidewalkRoadCount
+$CsvObject | Add-Member -MemberType NoteProperty -Name "crossing_tags" -Value $CrossingTagsCount
 # Check if CSV exists
 [bool]$FileExists = Test-Path -Path $CsvFilePath
 
