@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0" author="Custom" version="1.1" shortdescription="Crossing dropdown helpers" description="Quick crossing tags">
+	<group name="Quick-crossing" icon="presets/vehicle/crossing.svg">
+		<!-- Way: crossing:markings -->
+		<group name="Markings" icon="presets/vehicle/crossing.svg">
+			<item name="No markings" type="way" icon="presets/vehicle/crossing_unmarked.svg">
+				<key key="crossing:markings" value="no"/>
+			</item>
+			<item name="Zebra markings" type="way" icon="presets/vehicle/crossing_ref_zebra.svg">
+				<key key="crossing:markings" value="zebra"/>
+			</item>
+			<item name="Line markings" type="way" icon="presets/vehicle/crossing_markings_lines.svg">
+				<key key="crossing:markings" value="lines"/>
+			</item>
+			<item name="Ladder markings" type="way" icon="presets/vehicle/crossing_markings_ladder.svg">
+				<key key="crossing:markings" value="ladder"/>
+			</item>
+			<item name="Skewed ladder markings" type="way" icon="presets/vehicle/crossing_markings_ladder_skewed.svg">
+				<key key="crossing:markings" value="ladder:skewed"/>
+			</item>
+		</group>
+		<!-- Node: crossing:signals -->
+		<group name="Signals" icon="presets/vehicle/crossing_traffic_signals.svg">
+			<item name="No signals" type="node" icon="crossing_no_signals.svg">
+				<key key="highway" value="crossing"/>
+				<key key="crossing:signals" value="no"/>
+			</item>
+			<item name="Unknown signals" type="node" icon="presets/vehicle/crossing_traffic_signals.svg">
+				<key key="highway" value="crossing"/>
+				<key key="crossing:signals" value="yes"/>
+			</item>
+			<item name="Separate signals" type="node" icon="presets/vehicle/traffic_signals_crossing_traffic_signals.svg">
+				<key key="highway" value="crossing"/>
+				<key key="crossing:signals" value="separate"/>
+			</item>
+			<item name="Shared signals" type="node" icon="presets/vehicle/traffic_signals.svg">
+				<key key="highway" value="crossing"/>
+				<key key="crossing:signals" value="shared"/>
+			</item>
+		</group>
+		<group name="Kerbs" icon="presets/barrier/kerb.svg">
+			<item name="Lowered" type="node" icon="kerb_lowered.svg">
+				<key key="barrier" value="kerb"/>
+				<key key="kerb" value="lowered"/>
+			</item>
+			<item name="Flush" type="node" icon="kerb_flush.svg">
+				<key key="barrier" value="kerb"/>
+				<key key="kerb" value="flush"/>
+			</item>
+			<item name="Raised" type="node" icon="kerb_raised.svg">
+				<key key="barrier" value="kerb"/>
+				<key key="kerb" value="raised"/>
+			</item>
+			<item name="No kerb" type="node" icon="kerb_no.svg">
+				<key key="barrier" value="kerb"/>
+				<key key="kerb" value="no"/>
+			</item>
+			<item name="Rolled kerb" type="node" icon="kerb_rolled.svg">
+				<key key="barrier" value="kerb"/>
+				<key key="kerb" value="rolled"/>
+			</item>
+			<item name="Unknown kerb" type="node" icon="kerb_yes.svg">
+				<key key="barrier" value="kerb"/>
+			</item>
+		</group>
+		<group name="Tactile paving" icon="">
+			<item name="None" type="node" icon="">
+				<key key="tactile_paving" value="no"/>
+			</item>
+			<item name="Present" type="node" icon="">
+				<key key="tactile_paving" value="yes"/>
+			</item>
+		</group>
+	</group>
+</presets>
