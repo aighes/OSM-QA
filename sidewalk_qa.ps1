@@ -164,7 +164,6 @@ foreach ($Element in $Ways) {
                 }
             }
         }
-
         if ($IsRoad) { $Node["road"]="yes" }
     }
 }
@@ -228,8 +227,8 @@ Write-Host ("  crossing_tags    : {0}" -f $CrossingTagsCount) -ForegroundColor Y
 
 # Build the data object
 $CsvObject = New-Object PSObject
-$CsvObject | Add-Member -MemberType NoteProperty -Name "Date"   -Value $CurrentDate
-$CsvObject | Add-Member -MemberType NoteProperty -Name "Time"   -Value $CurrentTime
+$CsvObject | Add-Member -MemberType NoteProperty -Name "Date" -Value $CurrentDate
+$CsvObject | Add-Member -MemberType NoteProperty -Name "Time" -Value $CurrentTime
 $CsvObject | Add-Member -MemberType NoteProperty -Name "nodes" -Value $InputNodes
 $CsvObject | Add-Member -MemberType NoteProperty -Name "ways" -Value $Ways.Count
 $CsvObject | Add-Member -MemberType NoteProperty -Name "missing_kerb" -Value $MissingKerbCount

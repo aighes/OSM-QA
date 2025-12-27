@@ -31,14 +31,7 @@ function Write-GeoJson {
                 coordinates = @($Node.Lon, $Node.Lat)
             }
             properties = @{
-                issue = if($Node.ContainsKey('issue')){$Node.issue} else {"no"}
-                end_crossing = if($Node.ContainsKey('end_crossing')){$Node.end_crossing} else {"no"}
-                mid_crossing = if($Node.ContainsKey('mid_crossing')){$Node.mid_crossing} else {"no"}
-                end_link = if($Node.ContainsKey('end_link')){$Node.end_link} else {"no"}
-                mid_link = if($Node.ContainsKey('mid_link')){$Node.mid_link} else {"no"}
-                end_sidewalk = if($Node.ContainsKey('end_sidewalk')){$Node.end_sidewalk} else {"no"}
-                mid_sidewalk = if($Node.ContainsKey('mid_sidewalk')){$Node.mid_sidewalk} else {"no"}
-                road = if($Node.ContainsKey('road')){$Node.road} else {"no"}
+                issue = if($Node.ContainsKey('issue')){$Node.issue -join ';'} else {"no"}
             }
         }
     }
@@ -60,16 +53,26 @@ function Write-GeoJson {
 
 function Add-Issue {
     param (
-        [hashtable]$Node,
+        $Node,
         [string]$Issue
     )
-    if (-not $Node.ContainsKey("issue")) {
-        $Node["issue"] = @()
+
+    [int64]$id = $Node.Id
+
+    if ($IssueNodes.ContainsKey($id)) {
+        # Node already tracked → append issue
+        if ($null -eq $IssueNodes[$id].issue) {
+            $IssueNodes[$id].issue = $Issue
+        }
+        else {
+            $IssueNodes[$id].issue += $Issue
+        }
     }
-    if ($Node["issue"] -notcontains $Issue) {
-        $Node["issue"] += $Issue
+    else {
+        # First time this node is seen
+        $Node.issue = @($Issue)
+        $IssueNodes[$id] = $Node
     }
-    $IssueNodes[$Node["Id"]] = $Node
 }
 
 Export-ModuleMember -Function Get-Tag, Write-GeoJson, Add-Issue

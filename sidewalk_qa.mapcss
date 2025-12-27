@@ -1,5 +1,5 @@
 /* missing_kerb → red circle */
-node[issue=missing_kerb] {
+node[issue=~/(missing_kerb)$/] {
     symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: red;
@@ -7,7 +7,7 @@ node[issue=missing_kerb] {
 }
 
 /* crossing_missing → orange circle */
-node[issue=crossing_missing] {
+node[issue=~/(crossing_missing)$/] {
     symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: orange;
@@ -15,7 +15,7 @@ node[issue=crossing_missing] {
 }
 
 /* sidewalk_road → blue circle */
-node[issue=sidewalk_road] {
+node[issue=~/(sidewalk_road)$/] {
     symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: blue;
@@ -23,7 +23,7 @@ node[issue=sidewalk_road] {
 }
 
 /* crossing_tags → green circle */
-node[issue=crossing_tags] {
+node[issue=~/(crossing_tags)$/] {
     symbol-shape: circle;
     symbol-size: 10;
     symbol-fill-color: green;
