@@ -2,37 +2,37 @@
   "BuildItems": [
     {
       "Source": "src\\modules",
-      "Zip": false,
+      "Compress": false,
       "Destination": "build"
     },
     {
       "Source": "src\\sidewalk_qa.ps1",
-      "Zip": false,
+      "Compress": false,
       "Destination": "build"
     },
     {
       "Source": "src\\sidewalk_qa.mapcss",
-      "Zip": false,
+      "Compress": false,
       "Destination": "build"
     },
     {
       "Source": "src\\crossing.mapcss",
-      "Zip": false,
+      "Compress": false,
       "Destination": "D:\\jOSM"
     },
     {
       "Source": "src\\find super_relations.ps1",
-      "Zip": false,
+      "Compress": false,
       "Destination": "build"
     },
     {
       "Source": "src\\quick-highway",
-      "Zip": true,
+      "Compress": true,
       "Destination": "build"
     },
     {
       "Source": "src\\quick-crossing",
-      "Zip": true,
+      "Compress": true,
       "Destination": "build"
     }
   ]

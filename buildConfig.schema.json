@@ -8,10 +8,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["Source", "Zip", "Destination"],
+        "required": ["Source", "Compress", "Destination"],
         "properties": {
           "Source": { "type": "string" },
-          "Zip": { "type": "boolean" },
+          "Compress": { "type": "boolean" },
           "Destination": { "type": "string" }
         },
         "additionalProperties": false

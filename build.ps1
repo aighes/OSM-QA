@@ -31,7 +31,7 @@
 # Load Configuration
 # --------------------------------------------------
 if (-not (Test-Path -Path $ConfigFilePath -PathType Leaf)) {
-    throw "BuildConfig.json not found at: $ConfigFilePath"
+    throw "buildConfig.json not found at: $ConfigFilePath"
 }
 
 [string]$JsonContent = Get-Content -Path $ConfigFilePath -Raw
@@ -45,7 +45,7 @@ foreach ($BuildItem in $BuildConfig.BuildItems) {
     [pscustomobject]$TypedBuildItem = $BuildItem
 
     [string]$SourceValue = $TypedBuildItem.Source
-    [bool]$Zip = $TypedBuildItem.Zip
+    [bool]$Compress = $TypedBuildItem.Compress
     [string]$DestinationValue = $TypedBuildItem.Destination
 
     # --------------------------------------------------
@@ -87,7 +87,7 @@ foreach ($BuildItem in $BuildConfig.BuildItems) {
         [string]$FileName = [System.IO.Path]::GetFileName($SourcePath)
 
         try {
-            if ($Zip) {
+            if ($Compress) {
                 [string]$ZipFilePath = Join-Path -Path $DestinationPath -ChildPath "$FileName.zip"
 
                 if (Test-Path -Path $ZipFilePath) {
@@ -113,7 +113,7 @@ foreach ($BuildItem in $BuildConfig.BuildItems) {
         [string]$FolderName = Split-Path -Path $SourcePath -Leaf
 
         try {
-            if ($Zip) {
+            if ($Compress) {
                 [string]$ZipFilePath = Join-Path -Path $DestinationPath -ChildPath "$FolderName.zip"
 
                 if (Test-Path -Path $ZipFilePath) {
