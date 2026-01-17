@@ -59,15 +59,15 @@
 					<key key="highway" value="footway" />
 					<key key="footway" value="sidewalk"/>
 				</item>
-				<item name="Traffic island" icon="" type="way">
+				<item name="Traffic island" icon="footway_traffic_island.png" type="way">
 					<key key="highway" value="footway" />
 					<key key="footway" value="traffic_island"/>
 				</item>
-				<item name="Crossing" icon="crossing.png" type="way,closedway">
+				<item name="Crossing" icon="footway_crossing.png" type="way,closedway">
 					<key key="highway" value="footway" />
 					<key key="footway" value="crossing"/>
 				</item>
-				<item name="Link" icon="" type="way">
+				<item name="Link" icon="footway_link.png" type="way">
 					<key key="highway" value="footway" />
 					<key key="footway" value="link"/>
 				</item>
@@ -76,15 +76,19 @@
 				<item name="cycleway" de.name="Radweg" icon="cycleway.png" type="way,closedway">
 					<key key="highway" value="cycleway" />
 				</item>
-				<item name="Sidewpath" icon="" type="way,closedway">
+				<item name="Sidepath" icon="sidepath.png" type="way,closedway">
 					<key key="highway" value="cycleway" />
 					<key key="cycleway" value="sidepath"/>
 				</item>
-				<item name="Crossing" icon="" type="way">
+				<item name="Traffic island" icon="cycleway_traffic_island.png" type="way">
+					<key key="highway" value="cycleway" />
+					<key key="cycleway" value="traffic_island"/>
+				</item>
+				<item name="Crossing" icon="cycleway_crossing.png" type="way">
 					<key key="highway" value="cycleway" />
 					<key key="cycleway" value="crossing"/>
 				</item>
-				<item name="Link" icon="" type="way">
+				<item name="Link" icon="cycleway_link.png" type="way">
 					<key key="highway" value="cycleway" />
 					<key key="cycleway" value="link"/>
 				</item>
