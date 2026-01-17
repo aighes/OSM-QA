@@ -1,0 +1,39 @@
+{
+  "BuildItems": [
+    {
+      "Source": "src\\modules",
+      "Zip": false,
+      "Destination": "build"
+    },
+    {
+      "Source": "src\\sidewalk_qa.ps1",
+      "Zip": false,
+      "Destination": "build"
+    },
+    {
+      "Source": "src\\sidewalk_qa.mapcss",
+      "Zip": false,
+      "Destination": "build"
+    },
+    {
+      "Source": "src\\crossing.mapcss",
+      "Zip": false,
+      "Destination": "D:\\jOSM"
+    },
+    {
+      "Source": "src\\find super_relations.ps1",
+      "Zip": false,
+      "Destination": "build"
+    },
+    {
+      "Source": "src\\quick-highway",
+      "Zip": true,
+      "Destination": "build"
+    },
+    {
+      "Source": "src\\quick-crossing",
+      "Zip": true,
+      "Destination": "build"
+    }
+  ]
+}

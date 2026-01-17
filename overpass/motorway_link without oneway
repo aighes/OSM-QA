@@ -1,4 +1,0 @@
-[out:json][timeout:25];
-{{geocodeArea:Deutschland}}->.searchArea;
-way["highway"="motorway_link"]["oneway"!~".*"]["junction"!="roundabout"](area.searchArea);
-out geom;

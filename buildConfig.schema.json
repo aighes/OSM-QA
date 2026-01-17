@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Build Configuration Schema",
+  "type": "object",
+  "required": ["BuildItems"],
+  "properties": {
+    "BuildItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["Source", "Zip", "Destination"],
+        "properties": {
+          "Source": { "type": "string" },
+          "Zip": { "type": "boolean" },
+          "Destination": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
