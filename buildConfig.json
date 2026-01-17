@@ -26,12 +26,12 @@
       "Destination": "build"
     },
     {
-      "Source": "src\\quick-highway",
+      "Source": "src\\quick-highways",
       "Compress": true,
       "Destination": "build"
     },
     {
-      "Source": "src\\quick-crossing",
+      "Source": "src\\quick-crossings",
       "Compress": true,
       "Destination": "build"
     }
