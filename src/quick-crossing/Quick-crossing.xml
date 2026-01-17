@@ -71,30 +71,5 @@
 				<key key="tactile_paving" value="yes"/>
 			</item>
 		</group>
-		<group name="Footway">
-			<item name="Sidewalk" type="way" icon="">
-				<key key="footway" value="sidewalk"/>
-			</item>
-			<item name="Traffic island" type="way" icon="">
-				<key key="footway" value="traffic_island"/>
-			</item>
-			<item name="Crossing" type="way" icon="">
-				<key key="footway" value="crossing"/>
-			</item>
-			<item name="Link" type="way" icon="">
-				<key key="footway" value="link"/>
-			</item>
-		</group>
-		<group name="cycleway">
-			<item name="Sidewpath" type="way" icon="">
-				<key key="cycleway" value="sidepath"/>
-			</item>
-			<item name="Crossing" type="way" icon="">
-				<key key="cycleway" value="crossing"/>
-			</item>
-			<item name="Link" type="way" icon="">
-				<key key="cycleway" value="link"/>
-			</item>
-		</group>
 	</group>
 </presets>
