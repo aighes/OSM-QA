@@ -1,0 +1,167 @@
+<presets xmlns="http://josm.openstreetmap.de/tagging-preset-1.0"
+	shortdescription="Quick-highways"
+	ru.shortdescription="Быстро-дороги"
+	description="Presets for quickly adding popular highway=* and surface=* tags"
+	ru.description="Пресеты для быстрого добавления популярных тэгов highway=* и surface=*"
+	author="lzhl"
+	version="0.20_2021-09-02">
+
+	<group name="Quick-highways" ru.name="Быстро-дороги" icon="motorway.png">
+		<group name="highway=*" icon="unclassified.png">
+
+			<item name="motorway" ru.name="motorway" de.name="Autobahn" icon="motorway.png" type="way">
+				<key key="highway" value="motorway" />
+			</item>
+
+			<item name="trunk" ru.name="trunk" de.name="Autobahnähnliche Straße" icon="trunk.png" type="way,closedway">
+				<key key="highway" value="trunk" />
+			</item>
+
+			<item name="primary" ru.name="primary" de.name="Bundesstraße" icon="primary.png" type="way,closedway">
+				<key key="highway" value="primary" />
+			</item>
+
+			<item name="secondary" ru.name="secondary" de.name="Landesstraße" icon="secondary.png" type="way,closedway">
+				<key key="highway" value="secondary" />
+			</item>
+
+			<item name="tertiary" ru.name="tertiary" de.name="Kreisstraße" icon="tertiary.png" type="way,closedway">
+			        <key key="highway" value="tertiary" />
+			</item>
+
+			<group name="highway link" icon="motorway_link.png">
+
+				<item name="motorway_link" de.name="Autobahnauffahrt" type="way,closedway" icon="motorway_link.png">
+				    	<key key="highway" value="motorway_link" />
+				</item>
+
+				<item name="trunk_link" de.name="Schnellstraßenauffahrt" type="way" icon="trunk_link.png" >
+					<key key="highway" value="trunk_link" />
+				</item>
+	
+				<item name="primary_link" de.name="Bundesstraßenauffahrt" type="way" icon="primary_link.png">
+				    	<key key="highway" value="primary_link" />
+				</item>
+
+				<item name="secondary_link" de.name="Landesstraßenauffahrt" type="way" icon="secondary_link.png">
+				    	<key key="highway" value="secondary_link" />
+				</item>
+
+				<item name="tertiary_link" de.name="Kreisstraßenauffahrt" type="way" icon="tertiary_link.png">
+		  		  	<key key="highway" value="tertiary_link" />
+				</item>
+
+			</group>
+
+			<item name="unclassified" ru.name="unclassified" de.name="Nebenstraße" icon="unclassified.png" type="way,closedway">
+				<key key="highway" value="unclassified" />
+			</item>
+
+			<item name="residential" ru.name="residential" de.name="Wohngebietsstraße" icon="residential.png" type="way,closedway">
+				<key key="highway" value="residential" />
+			</item>
+
+			<item name="service" ru.name="service" de.name="Erschließungsweg" icon="service.png" type="way,closedway">
+				<key key="highway" value="service" />
+			</item>
+
+			<item name="track" ru.name="track" de.name="Wirtschaftsweg" icon="track.png" type="way,closedway">
+				<key key="highway" value="track" />
+			</item>
+
+			<item name="living street" ru.name="в РФ не используется" de.name="Verkehrsberuhigter Bereich" icon="living_street.png" type="way,closedway">
+				<key key="highway" value="living_street" />
+			</item>
+
+			<item name="footway" ru.name="footway" de.name="Fußweg" icon="footway.png" type="way,closedway">
+				<key key="highway" value="footway" />
+			</item>
+
+			<item name="sidewalk" ru.name="тротуар" de.name="Bürgersteig" icon="sidewalk.png" type="way,closedway">
+				<key key="highway" value="footway" />
+				<key key="footway" value="sidewalk" />
+			</item>
+
+			<item name="crossing" ru.name="переход" de.name="Fußgängerüberweg" icon="crossing.png" type="way,closedway">
+				<key key="highway" value="footway" />
+				<key key="footway" value="crossing" />
+			</item>
+
+			<item name="path" ru.name="path" de.name="Pfad" icon="path.png" type="way,closedway">
+				<key key="highway" value="path" />
+			</item>
+
+			<item name="steps" ru.name="steps" de.name="Treppe" icon="steps.png" type="way,closedway">
+				<key key="highway" value="steps" />
+			</item>
+		</group>
+
+		<group name="surface=*" icon="asphalt.png">
+			<item name="asphalt" ru.name="асфальт" de.name="Asphalt" icon="asphalt.png" type="way,closedway">
+				<key key="surface" value="asphalt" />
+			</item>
+
+			<item name="concrete" ru.name="бетон" de.name="Beton" icon="concrete.png" type="way,closedway">
+				<key key="surface" value="concrete" />
+			</item>
+
+			<item name="paving_stones" ru.name="брусчатка" de.name="Pflastersteine" icon="paving_stones.png" type="way,closedway">
+				<key key="surface" value="paving_stones" />
+			</item>
+
+			<item name="gravel" ru.name="гравий" de.name="Schotter" icon="gravel.png" type="way,closedway">
+				<key key="surface" value="gravel" />
+			</item>
+
+			<item name="wood" ru.name="дерево" de.name="Holzbretter" icon="wood.png" type="way,closedway">
+				<key key="surface" value="wood" />
+			</item>
+
+			<item name="ground" ru.name="земля" de.name="Bewachsene Erde" icon="dirt.png" type="way,closedway">
+				<key key="surface" value="ground" />
+			</item>
+
+			<item name="sand" ru.name="песок" de.name="Sand" icon="sand.png" type="way,closedway">
+				<key key="surface" value="sand" />
+			</item>
+
+			<item name="grass" ru.name="трава" de.name="Gras" icon="grass.png" type="way,closedway">
+				<key key="surface" value="grass" />
+			</item>
+		</group>
+
+		<group name="lanes=*" icon="3-lane.png">
+			<item name="1 lane" ru.name="1 полоса" icon="1-lane.png" type="way">
+				<key key="lanes" value="1" />
+			</item>
+      
+			<item name="2 lanes" ru.name="2 полосы" icon="2-lane.png" type="way">
+				<key key="lanes" value="2" />
+			</item>
+      
+			<item name="3 lanes" ru.name="3 полосы" icon="3-lane.png" type="way">
+				<key key="lanes" value="3" />
+			</item>
+      
+			<item name="4 lanes" ru.name="4 полосы" icon="4-lane.png" type="way">
+				<key key="lanes" value="4" />
+			</item>
+		</group>
+
+		<group name="additional" ru.name="дополнительно" de.name="zusätzlich" icon="bridge.png">
+			<item name="bridge" ru.name="мост" de.name="Brücke" icon="bridge.png" type="way">
+				<key key="bridge" value="yes" />
+				<key key="layer" value="1" />
+			</item>
+
+			<item name="tunnel" ru.name="тоннель" de.name="Tunnel" icon="tunnel.png" type="way">
+				<key key="tunnel" value="yes" />
+				<key key="layer" value="-1" />
+			</item>
+
+			<item name="building_passage" ru.name="проезд в здании" de.name="Gebäude-Passage" icon="building-passage.png" type="way">
+				<key key="tunnel" value="building_passage" />
+			</item>
+		</group>
+	</group>
+</presets>
