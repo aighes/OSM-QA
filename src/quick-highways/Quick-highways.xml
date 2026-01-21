@@ -166,5 +166,53 @@
 				<key key="oneway" value="yes" />
 			</item>
 		</group>
+		<group name="traffic signs" icon="presets/vehicle/traffic_signals.svg">
+			<group name="traffic lights" icon="presets/vehicle/traffic_signals.svg">
+				<item name="forward" icon="" type="node">
+					<key key="highway" value="traffic_signals"/>
+					<key key="traffic_signals" value="traffic_lights"/>
+					<key key="traffic_signals:direction" value="forward"/>
+				</item>
+				<item name="backward" icon="" type="node">
+					<key key="highway" value="traffic_signals"/>
+					<key key="traffic_signals" value="traffic_lights"/>
+					<key key="traffic_signals:direction" value="backward"/>
+				</item>
+			</group>
+			<group name="all way stop" icon="presets/vehicle/restriction/stop.svg">
+				<item name="forward" icon="" type="node">
+					<key key="highway" value="stop"/>
+					<key key="stop" value="all"/>
+					<key key="direction" value="forward"/>
+				</item>
+				<item name="backward" icon="" type="node">
+					<key key="highway" value="stop"/>
+					<key key="stop" value="all"/>
+					<key key="direction" value="backward"/>
+				</item>
+			</group>
+			<group name="minor stop" icon="presets/vehicle/restriction/stop.svg">
+				<item name="forward" icon="" type="node">
+					<key key="highway" value="stop"/>
+					<key key="stop" value="minor"/>
+					<key key="direction" value="forward"/>
+				</item>
+				<item name="backward" icon="" type="node">
+					<key key="highway" value="stop"/>
+					<key key="stop" value="minor"/>
+					<key key="direction" value="backward"/>
+				</item>
+			</group>
+			<group name="yield" icon="presets/vehicle/restriction/give_way.svg">
+				<item name="forward" icon="" type="node">
+					<key key="highway" value="give_way"/>
+					<key key="direction" value="forward"/>
+				</item>
+				<item name="backward" icon="" type="node">
+					<key key="highway" value="give_way"/>
+					<key key="direction" value="backward"/>
+				</item>
+			</group>
+		</group>
 	</group>
 </presets>
