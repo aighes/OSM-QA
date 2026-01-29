@@ -41,6 +41,24 @@
 					<key key="crossing:markings:colour" value="red"/>
 				</item>
 			</group>
+			<group name="Line markings (paired)" icon="presets/vehicle/crossing_markings_lines_paired.svg">
+				<item name="white" type="way">
+					<key key="crossing:markings" value="lines:paired"/>
+					<key key="crossing:markings:colour" value="white"/>
+				</item>
+				<item name="yellow" type="way">
+					<key key="crossing:markings" value="lines"/>
+					<key key="crossing:markings:colour" value="yellow"/>
+				</item>
+				<item name="blue" type="way">
+					<key key="crossing:markings" value="lines"/>
+					<key key="crossing:markings:colour" value="blue"/>
+				</item>
+				<item name="red" type="way">
+					<key key="crossing:markings" value="lines"/>
+					<key key="crossing:markings:colour" value="red"/>
+				</item>
+			</group>
 			<group name="Ladder markings" type="way" icon="presets/vehicle/crossing_markings_ladder.svg">
 				<item name="white" type="way">
 					<key key="crossing:markings" value="ladder"/>
