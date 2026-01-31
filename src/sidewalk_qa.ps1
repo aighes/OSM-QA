@@ -196,7 +196,7 @@ foreach ($Node in $FilterNodes) {
     }
 
     # sidewalk on road, blue circle
-    if (($Node.end_crossing -eq "yes" -or $Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and $Node.road -eq "yes") {      
+    if (((($Node.end_crossing -eq "yes") -and ($Node.mid_crossing -ne "yes")) -or $Node.end_sidewalk -eq "yes" -or $Node.mid_sidewalk -eq "yes") -and $Node.road -eq "yes") {      
         Add-Issue $Node "sidewalk_road"
         $SidewalkRoadCount++
     }
