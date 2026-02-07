@@ -3,56 +3,82 @@
 	description="Presets for quickly adding popular highway=* and surface=* tags"
 	version="0.1">
 	<group name="Quick-highways" icon="motorway.png">
-		<group name="highway=*" icon="unclassified.png">
+		<group name="Highway class" icon="unclassified.png">
 			<item name="motorway" de.name="Autobahn" icon="motorway.png" type="way">
 				<key key="highway" value="motorway" />
 			</item>
-			<item name="trunk" de.name="Autobahnähnliche Straße" icon="trunk.png" type="way,closedway">
+			<item name="Trunk" de.name="Autobahnähnliche Straße" icon="trunk.png" type="way,closedway">
 				<key key="highway" value="trunk" />
 			</item>
-			<item name="primary" de.name="Bundesstraße" icon="primary.png" type="way,closedway">
+			<item name="Primary" de.name="Bundesstraße" icon="primary.png" type="way,closedway">
 				<key key="highway" value="primary" />
 			</item>
-			<item name="secondary" de.name="Landesstraße" icon="secondary.png" type="way,closedway">
+			<item name="Secondary" de.name="Landesstraße" icon="secondary.png" type="way,closedway">
 				<key key="highway" value="secondary" />
 			</item>
-			<item name="tertiary" de.name="Kreisstraße" icon="tertiary.png" type="way,closedway">
+			<item name="Tertiary" de.name="Kreisstraße" icon="tertiary.png" type="way,closedway">
 			        <key key="highway" value="tertiary" />
 			</item>
-			<group name="highway link" icon="motorway_link.png">
-				<item name="motorway_link" de.name="Autobahnauffahrt" type="way,closedway" icon="motorway_link.png">
+			<group name="Highway link" icon="motorway_link.png">
+				<item name="Motorway link" de.name="Autobahnauffahrt" type="way,closedway" icon="motorway_link.png">
 				    	<key key="highway" value="motorway_link" />
 				</item>
-				<item name="trunk_link" de.name="Schnellstraßenauffahrt" type="way" icon="trunk_link.png" >
+				<item name="Trunk link" de.name="Schnellstraßenauffahrt" type="way" icon="trunk_link.png" >
 					<key key="highway" value="trunk_link" />
 				</item>
-				<item name="primary_link" de.name="Bundesstraßenauffahrt" type="way" icon="primary_link.png">
+				<item name="Primary link" de.name="Bundesstraßenauffahrt" type="way" icon="primary_link.png">
 				    	<key key="highway" value="primary_link" />
 				</item>
-				<item name="secondary_link" de.name="Landesstraßenauffahrt" type="way" icon="secondary_link.png">
+				<item name="Secondary link" de.name="Landesstraßenauffahrt" type="way" icon="secondary_link.png">
 				    	<key key="highway" value="secondary_link" />
 				</item>
-				<item name="tertiary_link" de.name="Kreisstraßenauffahrt" type="way" icon="tertiary_link.png">
+				<item name="Tertiary link" de.name="Kreisstraßenauffahrt" type="way" icon="tertiary_link.png">
 		  		  	<key key="highway" value="tertiary_link" />
 				</item>
 			</group>
-			<item name="unclassified" de.name="Nebenstraße" icon="unclassified.png" type="way,closedway">
+			<item name="Unclassified" de.name="Nebenstraße" icon="unclassified.png" type="way,closedway">
 				<key key="highway" value="unclassified" />
 			</item>
-			<item name="residential" de.name="Wohnstraße" icon="residential.png" type="way,closedway">
+			<item name="Residential" de.name="Wohnstraße" icon="residential.png" type="way,closedway">
 				<key key="highway" value="residential" />
 			</item>
-			<item name="service" de.name="Erschließungsweg" icon="service.png" type="way,closedway">
-				<key key="highway" value="service" />
-			</item>
-			<item name="track" de.name="Wirtschaftsweg" icon="track.png" type="way,closedway">
+			<group name="Service" de.name="Erschließungsweg" icon="service.png">
+				<item name="---" type="way,closedway">
+					<key key="highway" value="service" />
+				</item>
+				<item name="Driveway" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="driveway" />
+				</item>
+				<item name="Parking aisle" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="parking_aisle" />
+				</item>
+				<item name="Alley" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="alley" />
+				</item>
+				<item name="Drive through" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="drive-through" />
+				</item>
+				<item name="Emergency access" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="emergency_access" />
+				</item>
+				<item name="Slipway" type="way,closedway">
+					<key key="highway" value="service" />
+					<key key="service" value="slipway" />
+				</item>
+			</group>
+			<item name="Track" de.name="Wirtschaftsweg" icon="track.png" type="way,closedway">
 				<key key="highway" value="track" />
 			</item>
-			<item name="living street" de.name="Verkehrsberuhigter Bereich" icon="living_street.png" type="way,closedway">
+			<item name="Living street" de.name="Verkehrsberuhigter Bereich" icon="living_street.png" type="way,closedway">
 				<key key="highway" value="living_street" />
 			</item>
-			<group name="footway" de.name="Fußweg" icon="footway.png">
-				<item name="footway" de.name="Fußweg" icon="footway.png" type="way,closedway">
+			<group name="Footway" de.name="Fußweg" icon="footway.png">
+				<item name="---" de.name="Fußweg" icon="footway.png" type="way,closedway">
 					<key key="highway" value="footway" />
 				</item>
 				<item name="Sidewalk" icon="sidewalk.png" type="way,closedway" >
@@ -72,8 +98,8 @@
 					<key key="footway" value="link"/>
 				</item>
 			</group>
-			<group name="cycleway" de.name="Radweg" icon="cycleway.png">
-				<item name="cycleway" de.name="Radweg" icon="cycleway.png" type="way,closedway">
+			<group name="Cycleway" de.name="Radweg" icon="cycleway.png">
+				<item name="---" de.name="Radweg" icon="cycleway.png" type="way,closedway">
 					<key key="highway" value="cycleway" />
 				</item>
 				<item name="Sidepath" icon="sidepath.png" type="way,closedway">
@@ -93,41 +119,47 @@
 					<key key="cycleway" value="link"/>
 				</item>
 			</group>
-			<item name="path" de.name="Pfad" icon="path.png" type="way,closedway">
+			<item name="Path" de.name="Pfad" icon="path.png" type="way,closedway">
 				<key key="highway" value="path" />
 			</item>
-			<item name="steps" de.name="Treppe" icon="steps.png" type="way,closedway">
+			<item name="Steps" de.name="Treppe" icon="steps.png" type="way,closedway">
 				<key key="highway" value="steps" />
 			</item>
 		</group>
-		<group name="surface=*" icon="asphalt.png">
-			<item name="asphalt" de.name="Asphalt" icon="asphalt.png" type="way,closedway">
+		<group name="Surface" icon="asphalt.png">
+			<item name="Asphalt" de.name="Asphalt" icon="asphalt.png" type="way,closedway">
 				<key key="surface" value="asphalt" />
 			</item>
-			<item name="concrete" de.name="Beton" icon="concrete.png" type="way,closedway">
+			<item name="Concrete" de.name="Beton" icon="concrete.png" type="way,closedway">
 				<key key="surface" value="concrete" />
 			</item>
-			<item name="paving_stones" de.name="Pflastersteine" icon="paving_stones.png" type="way,closedway">
+			<item name="Paving stones" de.name="Pflastersteine" icon="paving_stones.png" type="way,closedway">
 				<key key="surface" value="paving_stones" />
 			</item>
-			<item name="gravel" de.name="Schotter" icon="gravel.png" type="way,closedway">
+			<item name="Gravel" de.name="Schotter" icon="gravel.png" type="way,closedway">
 				<key key="surface" value="gravel" />
 			</item>
-			<item name="wood" de.name="Holzbretter" icon="wood.png" type="way,closedway">
+			<item name="Fine gravel" de.name="feiner Schotter" icon="gravel.png" type="way,closedway">
+				<key key="surface" value="fine_gravel" />
+			</item>
+			<item name="Compacted" icon="" type="way,closedway">
+				<key key="surface" value="compacted" />
+			</item>
+			<item name="Wood" de.name="Holzbretter" icon="wood.png" type="way,closedway">
 				<key key="surface" value="wood" />
 			</item>
-			<item name="ground" de.name="Bewachsene Erde" icon="dirt.png" type="way,closedway">
+			<item name="Ground" de.name="Bewachsene Erde" icon="dirt.png" type="way,closedway">
 				<key key="surface" value="ground" />
 			</item>
-			<item name="sand" de.name="Sand" icon="sand.png" type="way,closedway">
+			<item name="Sand" de.name="Sand" icon="sand.png" type="way,closedway">
 				<key key="surface" value="sand" />
 			</item>
-			<item name="grass" de.name="Gras" icon="grass.png" type="way,closedway">
+			<item name="Grass" de.name="Gras" icon="grass.png" type="way,closedway">
 				<key key="surface" value="grass" />
 			</item>
 		</group>
-		<group name="lanes" icon="3-lane.png">
-			<item name="no markings" type="way">
+		<group name="Lanes" icon="3-lane.png">
+			<item name="No markings" type="way">
 				<key key="lane_markings" value="no" />
 			</item>
 			<item name="1 lane" icon="1-lane.png" type="way">
@@ -143,12 +175,12 @@
 				<key key="lanes" value="4" />
 			</item>
 		</group>
-		<group name="additional" de.name="zusätzlich" icon="bridge.png">
+		<group name="Additional" de.name="zusätzlich" icon="bridge.png">
 			<item name="bridge" de.name="Brücke" icon="bridge.png" type="way">
 				<key key="bridge" value="yes" />
 				<key key="layer" value="1" />
 			</item>
-			<item name="tunnel" de.name="Tunnel" icon="tunnel.png" type="way">
+			<item name="Tunnel" de.name="Tunnel" icon="tunnel.png" type="way">
 				<key key="tunnel" value="yes" />
 				<key key="layer" value="-1" />
 			</item>
@@ -156,59 +188,59 @@
 				<key key="tunnel" value="culvert" />
 				<key key="layer" value="-1" />
 			</item>
-			<item name="building_passage" de.name="Gebäude-Passage" icon="building-passage.png" type="way">
+			<item name="Building passage" de.name="Gebäude-Passage" icon="building-passage.png" type="way">
 				<key key="tunnel" value="building_passage" />
 			</item>
-			<item name="covered" de.name="überdacht" icon="" type="way">
+			<item name="Covered" de.name="überdacht" icon="" type="way">
 				<key key="covered" value="yes" />
 			</item>
 			<item name="Oneway" de.name="Einbahnstraße" icon="oneway.svg" type="way">
 				<key key="oneway" value="yes" />
 			</item>
 		</group>
-		<group name="traffic signs" icon="presets/vehicle/traffic_signals.svg">
-			<group name="traffic lights" icon="presets/vehicle/traffic_signals.svg">
-				<item name="forward" icon="" type="node">
+		<group name="Traffic signs" icon="presets/vehicle/traffic_signals.svg">
+			<group name="Traffic lights" icon="presets/vehicle/traffic_signals.svg">
+				<item name="Forward" icon="" type="node">
 					<key key="highway" value="traffic_signals"/>
 					<key key="traffic_signals" value="traffic_lights"/>
 					<key key="traffic_signals:direction" value="forward"/>
 				</item>
-				<item name="backward" icon="" type="node">
+				<item name="Backward" icon="" type="node">
 					<key key="highway" value="traffic_signals"/>
 					<key key="traffic_signals" value="traffic_lights"/>
 					<key key="traffic_signals:direction" value="backward"/>
 				</item>
 			</group>
-			<group name="all way stop" icon="presets/vehicle/restriction/stop.svg">
-				<item name="forward" icon="" type="node">
+			<group name="All way stop" icon="presets/vehicle/restriction/stop.svg">
+				<item name="Forward" icon="" type="node">
 					<key key="highway" value="stop"/>
 					<key key="stop" value="all"/>
 					<key key="direction" value="forward"/>
 				</item>
-				<item name="backward" icon="" type="node">
+				<item name="Backward" icon="" type="node">
 					<key key="highway" value="stop"/>
 					<key key="stop" value="all"/>
 					<key key="direction" value="backward"/>
 				</item>
 			</group>
-			<group name="minor stop" icon="presets/vehicle/restriction/stop.svg">
-				<item name="forward" icon="" type="node">
+			<group name="Minor stop" icon="presets/vehicle/restriction/stop.svg">
+				<item name="Forward" icon="" type="node">
 					<key key="highway" value="stop"/>
 					<key key="stop" value="minor"/>
 					<key key="direction" value="forward"/>
 				</item>
-				<item name="backward" icon="" type="node">
+				<item name="Backward" icon="" type="node">
 					<key key="highway" value="stop"/>
 					<key key="stop" value="minor"/>
 					<key key="direction" value="backward"/>
 				</item>
 			</group>
-			<group name="yield" icon="presets/vehicle/restriction/give_way.svg">
-				<item name="forward" icon="" type="node">
+			<group name="Yield" icon="presets/vehicle/restriction/give_way.svg">
+				<item name="Forward" icon="" type="node">
 					<key key="highway" value="give_way"/>
 					<key key="direction" value="forward"/>
 				</item>
-				<item name="backward" icon="" type="node">
+				<item name="Backward" icon="" type="node">
 					<key key="highway" value="give_way"/>
 					<key key="direction" value="backward"/>
 				</item>
